@@ -4,9 +4,9 @@
 
 using namespace std;
 
-const int N = 5; // number of discrete points along one axis (excluding boundaries)
+const int N = 50; // number of discrete points along one axis (excluding boundaries)
 const double tol = 1e-8;
-const double h = 1.0 / (N + 1); // number of discrete elements in 1D
+const double h = 1.0 / (N + 1); // distance between two adjacent points along one axis
 
 void initialize(vector<vector<double>>& t)
 {
@@ -24,7 +24,7 @@ void initialize(vector<vector<double>>& t)
 
 void update(vector<vector<double>>& t)
  {  
-    vector<vector<double>> tnew=t;   /*since the boundary conditions along i=0,1 and j=0,1 are known, the points to be calculated begin from the neighbouring 
+    vector<vector<double>> tnew=t;   /*since the boundary conditions along i=0,1 and j=0,1 are known, the points to be calculated begin from the neighboring 
                                points of the BCs */
     double error=1.0;
     int count=0;
@@ -36,7 +36,7 @@ void update(vector<vector<double>>& t)
         for (int j = 1; j <= N; ++j)
          {
            tnew[i][j] = 0.25 * (t[i-1][j] + t[i+1][j] + t[i][j-1] + t[i][j+1]);
-             error=abs((tnew[i][j]-t[i][j]));
+             error=abs((tnew[i][j]-t[i][j]));  //convergence criteria 
             
             
             t[i][j]=tnew[i][j];
